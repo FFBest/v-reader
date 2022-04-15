@@ -1,6 +1,6 @@
 import { createStore } from 'vuex';
 
-import { assignIn } from 'lodash';
+import { merge } from 'lodash';
 import { userConfigSave } from '@/config/base.config';
 
 export default createStore({
@@ -10,7 +10,7 @@ export default createStore({
   getters: {},
   mutations: {
     updateUserConfig(state, config) {
-      state.userConfig = assignIn({}, state.userConfig, config);
+      state.userConfig = merge({}, state.userConfig, config);
       // console.error(config);
       // console.error(state.userConfig);
       userConfigSave(state.userConfig, data => {

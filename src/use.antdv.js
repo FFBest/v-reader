@@ -9,6 +9,7 @@ import {
   Form,
   FormItem,
   Input,
+  InputPassword,
   Switch,
   Button,
 } from 'ant-design-vue';
@@ -25,6 +26,7 @@ export default {
       .use(Form)
       .use(FormItem)
       .use(Input)
+      .use(InputPassword)
       .use(Switch)
       .use(Button);
   },

@@ -16,15 +16,8 @@ export default {
       proxy_protocol: 'socks5',
       proxy_ip: '',
       proxy_port: '',
-    },
-    token: {
-      access_token: '',
-      expires_in: '',
-      token_type: '',
-      scope: 'read write',
-      refresh_token: '',
-      code: '',
-      expirse_time: '',
+      email: '',
+      auth: '',
     },
   },
 };

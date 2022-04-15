@@ -17,7 +17,7 @@
         <a-input v-model:value="formState.email" />
       </a-form-item>
       <a-form-item label="password">
-        <a-input v-model:value="formState.passwd" />
+        <a-input-password v-model:value="formState.passwd" />
       </a-form-item>
       <a-form-item :wrapper-col="{ span: 20, offset: 0 }">
         <a-button style="margin-left: 10px" type="text" @click="login">
@@ -29,13 +29,17 @@
 </template>
 
 <script>
+import store from '@/store';
 import request from '@/utils/request';
 import { reactive } from 'vue';
+import { useStore } from 'vuex';
 
 export default {
   setup() {
+    const store = useStore();
+    const userConfig = store.state.userConfig;
     const formState = reactive({
-      email: '',
+      email: userConfig.app.email,
       passwd: '',
     });
     return {
@@ -49,14 +53,15 @@ export default {
       const formData = new FormData();
       formData.append('Email', this.formState.email);
       formData.append('Passwd', this.formState.passwd);
-      request.post('accounts/ClientLogin', formData).then(
-        res => {
-          console.error(res);
-        },
-        err => {
-          console.error(err);
-        },
-      );
+      request.post('accounts/ClientLogin', formData).then(res => {
+        store.commit('updateUserConfig', {
+          app: {
+            email: this.formState.email,
+            auth: res,
+          },
+        });
+        this.compClose();
+      });
     },
     compClose() {
       this.$emit('comp-close');

@@ -28,7 +28,7 @@
         /></a-button>
       </div>
     </a-layout-header>
-    <a-layout>
+    <a-layout v-if="userAuth">
       <a-layout-sider v-model:collapsed="collapsed"> Sider </a-layout-sider>
       <a-layout>
         <a-layout-content>{{ userConfig }}</a-layout-content>
@@ -36,7 +36,10 @@
     </a-layout>
   </a-layout>
   <comp-user-config :visible="userConfigVisible" @compClose="userConfigClose" />
-  <comp-user-login :visible="userLoginVisible" />
+  <comp-user-login
+    :visible="userLoginVisible"
+    @compClose="() => (userLoginVisible = !userLoginVisible)"
+  />
 </template>
 
 <script>
@@ -69,6 +72,13 @@ export default {
   computed: {
     userConfig() {
       return this.$store.state.userConfig;
+    },
+    userAuth() {
+      return (
+        this.$store.state.userConfig &&
+        this.$store.state.userConfig.app &&
+        this.$store.state.userConfig.app.auth
+      );
     },
   },
   methods: {
