@@ -2,6 +2,7 @@
 import {
   ConfigProvider,
   Layout,
+  LayoutHeader,
   LayoutSider,
   LayoutContent,
   Modal,
@@ -17,6 +18,7 @@ export default {
     app
       .use(ConfigProvider)
       .use(Layout)
+      .use(LayoutHeader)
       .use(LayoutSider)
       .use(LayoutContent)
       .use(Modal)

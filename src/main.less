@@ -1,0 +1,20 @@
+#app {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  position: relative;
+  & .ant-layout-header {
+    height: 38px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    & .main-header-sider {
+      flex: 0 0 200px;
+    }
+    & .main-header-content {
+      flex: 0 1 100%;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}

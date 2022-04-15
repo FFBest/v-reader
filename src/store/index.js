@@ -1,6 +1,7 @@
 import { createStore } from 'vuex';
 
 import { assignIn } from 'lodash';
+import { userConfigSave } from '@/config/base.config';
 
 export default createStore({
   state: {
@@ -10,8 +11,11 @@ export default createStore({
   mutations: {
     updateUserConfig(state, config) {
       state.userConfig = assignIn({}, state.userConfig, config);
-      console.error(config);
-      console.error(state.userConfig);
+      // console.error(config);
+      // console.error(state.userConfig);
+      userConfigSave(state.userConfig, data => {
+        console.error(data);
+      });
     },
   },
   actions: {},
