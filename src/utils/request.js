@@ -47,7 +47,7 @@ request.interceptors.request.use(config => {
     config.headers['AppKey'] = userConfig.app.app_key;
     if (userConfig.app.auth) {
       const auth = userConfig.app.auth.split('\n');
-      config.headers['Authorization'] = `GoogleLogin ${auth[auth.length - 1]}`;
+      config.headers['Authorization'] = `GoogleLogin ${auth[2]}`;
     }
   }
   // Authorization

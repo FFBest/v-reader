@@ -29,7 +29,9 @@
       </div>
     </a-layout-header>
     <a-layout v-if="userAuth">
-      <a-layout-sider v-model:collapsed="collapsed"> Sider </a-layout-sider>
+      <a-layout-sider v-model:collapsed="collapsed">
+        <comp-sider />
+      </a-layout-sider>
       <a-layout>
         <a-layout-content>{{ userConfig }}</a-layout-content>
       </a-layout>
@@ -46,6 +48,7 @@
 import { ref } from 'vue';
 import CompUserConfig from '@/components/UserConfig';
 import CompUserLogin from '@/components/UserLogin';
+import CompSider from '@/components/CompSider';
 import {
   UserOutlined,
   MenuUnfoldOutlined,
@@ -57,6 +60,7 @@ export default {
   components: {
     CompUserConfig,
     CompUserLogin,
+    CompSider,
     UserOutlined,
     MenuUnfoldOutlined,
     MenuFoldOutlined,
