@@ -1,13 +1,19 @@
 const { app, BrowserWindow, Menu } = require('electron');
+const { ipcMain } = require('electron');
 // disable menu
 Menu.setApplicationMenu(null);
 
 const path = require('path');
+const { loadConfig } = require('./config');
 const basePath = process.cwd();
 
+let mainWindow;
+const loadMain = () => {
+  mainWindow.loadURL('http://localhost:8080/');
+};
 const createWindow = () => {
   // Create the browser window.
-  let mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1024,
     height: 768,
     minWidth: 1024,
@@ -20,18 +26,26 @@ const createWindow = () => {
       contextIsolation: false,
       webSecurity: false,
     },
+    backgroundColor: '#000',
   });
-
-  mainWindow.loadURL('http://localhost:8080/');
-
+  loadConfig(config => {
+    const appConfig = config.app;
+    let proxyRules = '';
+    if (appConfig) {
+      if (appConfig.use_proxy) {
+        proxyRules = `${appConfig.proxy_protocol}://${appConfig.proxy_ip}:${appConfig.proxy_port}`;
+      }
+    }
+    mainWindow.webContents.session
+      .setProxy({
+        proxyRules: proxyRules,
+        proxyBypassRules: '192.168.*.*',
+      })
+      .then(() => {
+        loadMain();
+      });
+  });
   mainWindow.webContents.openDevTools();
-
-  mainWindow.on('closed', () => {
-    mainWindow = null;
-  });
-
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
 };
 
 // This method will be called when Electron has finished
@@ -45,6 +59,18 @@ app.whenReady().then(() => {
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
+
+  // 注册用户配置相关
+  const userHandler = require('./user.handler');
+  userHandler.init();
+
+  ipcMain.on('app.reload', () => {
+    // console.error('reload');
+    const oldMain = mainWindow;
+    oldMain.hide();
+    createWindow();
+    oldMain.close();
+  });
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -53,7 +79,3 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
 });
-
-// 注册用户配置相关
-const userHandler = require('./user.handler');
-userHandler.init();

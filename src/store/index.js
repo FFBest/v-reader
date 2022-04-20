@@ -1,7 +1,7 @@
 import { createStore } from 'vuex';
 
 import { merge } from 'lodash';
-import { userConfigSave } from '@/config/base.config';
+import { appReload, userConfigSave } from '@/config/base.config';
 
 export default createStore({
   state: {
@@ -10,11 +10,21 @@ export default createStore({
   getters: {},
   mutations: {
     updateUserConfig(state, config) {
+      const oldConfig = state.userConfig;
       state.userConfig = merge({}, state.userConfig, config);
       // console.error(config);
       // console.error(state.userConfig);
-      userConfigSave(state.userConfig, data => {
-        console.error(data);
+      userConfigSave(state.userConfig, () => {
+        // console.log(d);
+        if (oldConfig) {
+          if (
+            oldConfig.app &&
+            oldConfig.app.use_proxy == state.userConfig.app.use_proxy
+          ) {
+            return;
+          }
+          appReload();
+        }
       });
     },
   },

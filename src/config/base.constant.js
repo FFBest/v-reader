@@ -1,4 +1,7 @@
 export default {
+  app: {
+    APP_RELOAD: 'app.reload',
+  },
   user: {
     USER_CONFIG_LOAD: 'user.config.load',
     USER_CONFIG_LOAD_REPLY: 'user.config.load.reply',
