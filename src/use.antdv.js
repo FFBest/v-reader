@@ -12,6 +12,9 @@ import {
   InputPassword,
   Switch,
   Button,
+  Menu,
+  MenuItem,
+  MenuDivider,
 } from 'ant-design-vue';
 
 export default {
@@ -28,6 +31,9 @@ export default {
       .use(Input)
       .use(InputPassword)
       .use(Switch)
-      .use(Button);
+      .use(Button)
+      .use(Menu)
+      .use(MenuItem)
+      .use(MenuDivider);
   },
 };
