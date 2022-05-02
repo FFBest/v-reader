@@ -8,7 +8,7 @@ export const BASE_API_URL = 'https://www.inoreader.com/';
 const request = axios.create({
   // API 请求的默认前缀
   baseURL: BASE_API_URL,
-  timeout: 6000, // 请求超时时间
+  timeout: 60000, // 请求超时时间
 });
 // 异常拦截处理器
 const errorHandler = error => {

@@ -63,6 +63,16 @@ app.whenReady().then(() => {
   // 注册用户配置相关
   const userHandler = require('./user.handler');
   userHandler.init();
+  // 注册数据配置相关
+  const steamHandler = require('./steam.handler');
+  // steamHandler.init();
+
+  ipcMain.on('steam.load.page', (event, arg) => {
+    if (arg.key) {
+      steamHandler.pushItems(JSON.parse(arg.data));
+      steamHandler.loadItem();
+    }
+  });
 
   ipcMain.on('app.reload', () => {
     // console.error('reload');

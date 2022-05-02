@@ -23,4 +23,8 @@ export default {
       auth: '',
     },
   },
+  steam: {
+    STEAM_LOAD_PAGE: 'steam.load.page',
+    STEAM_LOAD_PAGE_REPLY: 'steam.load.page.reply',
+  },
 };
